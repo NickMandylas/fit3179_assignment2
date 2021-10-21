@@ -1,0 +1,49 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "data": { "url": "../transformed_data/hale_expectancy_gender_region.csv" },
+  "mark": "bar",
+  "title": {
+    "text": "Average Healthy Life Expectancy by Region",
+    "color": "#092215",
+    "fontSize": 18.5
+  },
+  "params": [
+    {
+      "name": "Year",
+      "value": 2019,
+      "bind": {
+        "input": "select",
+        "options": ["2019", "2015", "2010", "2000"],
+        "name": "Year: "
+      }
+    }
+  ],
+  "transform": [{ "filter": "datum.Period == Year" }],
+  "encoding": {
+    "x": {
+      "field": "Location",
+      "type": "ordinal",
+      "title": "Region"
+    },
+    "y": {
+      "field": "Hale Expectency",
+      "type": "quantitative",
+      "title": "HALE Expectancy"
+    },
+    "color": {
+      "field": "Dim1",
+      "type": "nominal",
+      "title": "Sex Type"
+    },
+    "tooltip": [
+      { "field": "Location", "type": "nominal", "title": "Country" },
+      {
+        "field": "Dim1",
+        "type": "nominal",
+        "title": "Sex Type"
+      },
+      { "field": "Hale Expectency", "type": "quantitative", "title": "HALE" }
+    ]
+  }
+}

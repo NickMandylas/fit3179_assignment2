@@ -1,0 +1,284 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Stylesheets -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Vegalite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+    <title>World Health Statistics - Nicholas Mandylas</title>
+  </head>
+
+  <body>
+    <div class="jumbotron jumbotron-fluid bg-info" style="margin-bottom: 0">
+      <div class="container">
+        <h1 class="display-4 text-light" style="font-weight: 400">
+          World Health Statistics
+        </h1>
+        <h6 class="text-light" style="font-weight: 400">
+          By Nicholas Mandylas
+        </h6>
+        <p class="lead text-light" style="opacity: 80%">
+          This is a visualisation report looks into how health differs between
+          nations around the around. <br />It dives deep into understanding what
+          contributing health factors determine a healthy or unhealthy society.
+        </p>
+      </div>
+    </div>
+    <div
+      class="container-fluid bg-light"
+      style="padding-top: 20px; padding-bottom: 20px"
+    >
+      <div class="container">
+        <h2>Introduction</h2>
+        <p style="opacity: 80%">
+          Health is a key property for creating a good quality of life. Being
+          able to be free from illness or injury can directly affect our
+          capacity to enjoy life.
+        </p>
+        <p style="opacity: 80%">
+          Utilising data from the 2020 report of the World Heatlh Statistics
+          (viewable from
+          <a
+            href="https://www.kaggle.com/utkarshxy/who-worldhealth-statistics-2020-complete"
+            >here</a
+          >), we're able to gain an insight into how different aspects such as
+          drinking water, clean household energy, tobacco control or the
+          availabity of medical doctors, can affect health in a country.
+        </p>
+      </div>
+    </div>
+    <div
+      class="container-fluid"
+      style="padding-top: 20px; padding-bottom: 20px"
+    >
+      <div class="container">
+        <h2>Life Expectancy & HALE</h2>
+        <p style="opacity: 80%">
+          Life expectancy is the most commonly used measure used to describe a
+          population’s health. Historical data shows that global life expectancy
+          has increased drastically over the last couple of centuries, with
+          substantial long-run improvements in all countries around the world.
+          In fact, recent life expectancy gains in developing countries have
+          been particularly important. However, despite recent progress towards
+          long-run cross-country convergence, there are still huge differences
+          that have to be addressed: in several countries in Sub-Saharan Africa
+          the average life expectancy is still less than 60 years, compared to
+          more than 80 years in countries in Europe or in Japan.
+        </p>
+        <p style="opacity: 80%">
+          As the world's population is living longer, it is important to
+          understand whether people are spending more years in good health or
+          more years living with illness. The measure of health-adjusted life
+          expectancy (HALE) can be used to understand this.
+        </p>
+        <p style="opacity: 80%">
+          <b>HALE</b> extends the concept of life expectancy by considering the
+          time spent living with disease and injury. It reflects the length of
+          time an individual at a specific age can, on average, expect to live
+          in full health; that is, time lived without the health consequences of
+          disease or injury.
+        </p>
+        <div id="hale_choropleth" style="width: 100%; margin-top: 20px"></div>
+        <p style="opacity: 80%; margin-top: 10px">
+          Below is a comparison of HALE between all the regions. Here we can
+          notice that Africa by far has the lowest HALE, closely followed by the
+          Middle East. The Western World being Europe and Western Pacific are
+          regions in the world with the highest average HALE.
+        </p>
+        <div id="hale_region_chart" style="width: 100%; margin-top: 20px"></div>
+      </div>
+    </div>
+    <div
+      class="container-fluid"
+      style="padding-top: 20px; padding-bottom: 20px"
+    ></div>
+    <div
+      class="container-fluid bg-light"
+      style="padding-top: 20px; padding-bottom: 20px"
+    >
+      <div class="container">
+        <h2>Medical Professionals</h2>
+        <p style="opacity: 80%">
+          Here we'll explore how medical professionals (doctors, dentists,
+          midwives and pharamcists) have an effect on healthcare in each
+          country.
+        </p>
+        <div
+          id="healthcare_scatterplot"
+          style="width: 100%; margin-top: 20px"
+        ></div>
+      </div>
+      <div class="container">
+        <p style="opacity: 80%">
+          Speaking of medical professionals, we'll now take a look at how births
+          attended by skilled medical professionals affect the maternal
+          mortality rate accorss countries.
+        </p>
+        <p style="opacity: 80%">
+          Slide the scoller back and forth to add more or less time points for
+          each country, or if you want to see an individual countries view,
+          search there name in the chart. Any interesting search would be
+          "Afghanistan", a sharp decrease since 2001, but it picked up again.
+        </p>
+        <div
+          id="infant_mortality_rate"
+          style="width: 100%; margin-top: 20px"
+        ></div>
+      </div>
+    </div>
+    <div
+      class="container-fluid bg-dark"
+      style="padding-top: 20px; padding-bottom: 20px"
+    >
+      <div class="container">
+        <h2 class="text-light">Mental Health</h2>
+        <p class="text-light" style="opacity: 80%">
+          In this section, we'll explore how mental health is a problem compared
+          to each country. Interestingly from the map below, we can see that
+          Western Countries (unlike the first choropleth map) have higher
+          sucicide rates compared to African/Asian countries. This could
+          possibly mean that good health/healthcare doesn't necessary mean good
+          mental health.
+        </p>
+        <div
+          id="suicide_choropleth"
+          style="width: 100%; margin-top: 20px"
+        ></div>
+      </div>
+    </div>
+    <div
+      class="container-fluid"
+      style="padding-top: 20px; padding-bottom: 20px"
+    >
+      <div class="container">
+        <h2>Healthcare Spending</h2>
+        <p style="opacity: 80%">
+          Now we'll explore how healthcare is spent between countries, below are
+          two graphs showing the top 10 and bottom 10 countries by healthcare
+          expenditure per capita. You'll notice that all the bottom 10 countries
+          are African, whilst all the top 10 are western countries.
+        </p>
+        <div class="row">
+          <div class="col-6">
+            <div
+              id="top_expenditure_by_country"
+              style="width: 100%; margin-top: 20px"
+            ></div>
+          </div>
+          <div class="col-6">
+            <div
+              id="top_expenditure_pop_by_country"
+              style="width: 100%; margin-top: 20px"
+            ></div>
+          </div>
+        </div>
+        <p style="opacity: 80%">
+          It's interesting to note that these African countries only have
+          $18-$30 per capita to spend on it's population, whilst having
+          substantially larger populations compared to highest spending western
+          countries. Countries such as Switzerland are spending 500 times more,
+          but have at least 10-15 times smaller population size.
+        </p>
+        <div
+          id="received_expenditure_by_country"
+          style="width: 100%; margin-top: 20px"
+        ></div>
+        <p style="opacity: 80%">
+          Finally we'll look at the top countries who have the largest
+          healthcare spend received internationally. Interestingly, this does
+          not include the countries listed above, that have substantially larger
+          populations, but less money.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bootstrap Scripts-->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Vega-lite Script-->
+    <script type="text/javascript">
+      const hale_choropleth =
+        "http://127.0.0.1:5500/visualisations/hale_choropleth.json";
+      vegaEmbed("#hale_choropleth", hale_choropleth, { actions: false });
+
+      const suicide_choropleth =
+        "http://127.0.0.1:5500/visualisations/suicide_choropleth.json";
+      vegaEmbed("#suicide_choropleth", suicide_choropleth, {
+        actions: false,
+      });
+
+      const healthcare_scatterplot =
+        "http://127.0.0.1:5500/visualisations/healthcare_scatterplot.json";
+      vegaEmbed("#healthcare_scatterplot", healthcare_scatterplot, {
+        actions: false,
+      });
+
+      const hale_region_chart =
+        "http://127.0.0.1:5500/visualisations/hale_region_chart.json";
+      vegaEmbed("#hale_region_chart", hale_region_chart, {
+        actions: false,
+      });
+
+      const infant_mortality_rate =
+        "http://127.0.0.1:5500/visualisations/infant_mortality_choropleth.json";
+      vegaEmbed("#infant_mortality_rate", infant_mortality_rate, {
+        actions: false,
+      });
+
+      const top_expenditure_by_country =
+        "http://127.0.0.1:5500/visualisations/top_expenditure_by_country.json";
+      vegaEmbed("#top_expenditure_by_country", top_expenditure_by_country, {
+        actions: false,
+      });
+
+      const top_expenditure_pop_by_country =
+        "http://127.0.0.1:5500/visualisations/top_expenditure_pop_by_country.json";
+      vegaEmbed(
+        "#top_expenditure_pop_by_country",
+        top_expenditure_pop_by_country,
+        {
+          actions: false,
+        }
+      );
+
+      const received_expenditure_by_country =
+        "http://127.0.0.1:5500/visualisations/received_expenditure_by_country.json";
+      vegaEmbed(
+        "#received_expenditure_by_country",
+        received_expenditure_by_country,
+        {
+          actions: false,
+        }
+      );
+    </script>
+  </body>
+</html>

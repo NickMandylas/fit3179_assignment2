@@ -1,0 +1,73 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A scatterplot showing body mass and flipper lengths of penguins.",
+  "height": 500,
+  "width": "container",
+  "data": {
+    "url": "../transformed_data/infant_mortality_rate.csv"
+  },
+  "title": {
+    "text": "Maternal Mortality Rate vs Birth Attended By Skilled Professional",
+    "color": "#092215",
+    "fontSize": 18
+  },
+  "background": "#f8f9fa",
+  "params": [
+    {
+      "name": "Year",
+      "value": 2010,
+      "bind": {
+        "input": "range",
+        "min": 2000,
+        "max": 2017,
+        "step": 1,
+        "name": "Minimum Year: "
+      }
+    },
+    {
+      "name": "Country",
+      "value": null,
+      "bind": {
+        "input": "text",
+        "name": "Country: "
+      }
+    }
+  ],
+  "transform": [
+    { "filter": "datum.Period >= Year" },
+    {
+      "filter": "Country == null || datum.Location == Country || Country == ''"
+    }
+  ],
+  "mark": "point",
+  "encoding": {
+    "x": {
+      "field": "SkilledProf",
+      "type": "quantitative",
+      "title": "Skilled Professional at Birth"
+    },
+    "y": {
+      "field": "MortRate",
+      "type": "quantitative",
+      "title": "Birth Mortality Rate",
+      "scale": { "zero": true }
+    },
+    "tooltip": [
+      { "field": "Location", "type": "nominal", "title": "Country" },
+      {
+        "field": "Period",
+        "type": "nominal",
+        "title": "Year"
+      },
+      {
+        "field": "MortRate",
+        "type": "quantitative",
+        "title": "Birth Mortality Rate"
+      }
+    ],
+    "color": {
+      "field": "Period",
+      "type": "nominal"
+    }
+  }
+}

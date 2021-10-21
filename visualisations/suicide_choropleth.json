@@ -1,0 +1,79 @@
+{
+  "config": {
+    "legend": {
+      "orient": "bottom"
+    },
+    "view": {
+      "stroke": "transparent"
+    }
+  },
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Suicide Rate by Country",
+    "color": "#f8f9fa",
+    "fontSize": 18.5
+  },
+  "width": "container",
+  "height": 500,
+  "background": "#343a40",
+  "data": {
+    "url": "../utils/world.json",
+    "format": { "type": "topojson", "feature": "global.geo" }
+  },
+  "projection": { "type": "equalEarth" },
+  "layer": [
+    {
+      "transform": [
+        {
+          "calculate": "'❌ Not data was available for ' + datum.properties.name + '.'",
+          "as": "note"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "darkgray",
+        "stroke": "black",
+        "strokeWidth": 1
+      },
+      "encoding": { "tooltip": { "field": "note" } }
+    },
+    {
+      "transform": [
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": {
+              "url": "../transformed_data/suicide_rates_both_sex_country.csv"
+            },
+            "key": "Location",
+            "fields": ["First Tooltip"]
+          }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "#000", "strokeWidth": 0.2 },
+      "encoding": {
+        "color": {
+          "field": "First Tooltip",
+          "title": "Percent per Country",
+          "type": "quantitative",
+          "legend": {
+            "titleColor": "#fff",
+            "labelColor": "#fff"
+          },
+          "scale": {
+            "type": "threshold",
+            "domain": [0, 5, 10, 15, 20, 25, 30, 35]
+          }
+        },
+        "tooltip": [
+          { "field": "properties.name", "type": "nominal", "title": "Country" },
+          {
+            "field": "First Tooltip",
+            "type": "quantitative",
+            "title": "Suicide Rate (Per 100,000):"
+          }
+        ]
+      }
+    }
+  ]
+}

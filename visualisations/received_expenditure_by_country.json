@@ -1,0 +1,50 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple radial chart with embedded data.",
+  "data": { "url": "../transformed_data/received_expenditure_by_country.csv" },
+  "height": 350,
+  "width": "container",
+  "view": {
+    "stroke": "transparent"
+  },
+  "title": {
+    "text": "Healthcare Spend Received per Capita ($)",
+    "color": "#092215",
+    "fontSize": 18
+  },
+  "background": "#fff",
+  "layer": [
+    {
+      "mark": { "type": "arc", "innerRadius": 50, "stroke": "#fff" }
+    },
+    {
+      "mark": { "type": "text", "radiusOffset": 30 },
+      "encoding": {
+        "text": { "field": "Country", "type": "nominal" },
+        "opacity": {
+          "condition": {
+            "test": "datum['Country'] == 'Eswatini' || datum['Country'] == 'Tuvalu' || datum['Country'] == 'Micronesia, Fed. Sts.'",
+            "value": 1
+          },
+          "value": 0
+        }
+      }
+    }
+  ],
+  "encoding": {
+    "theta": { "field": "Received", "type": "quantitative", "stack": true },
+    "radius": {
+      "field": "Received",
+      "scale": { "type": "sqrt", "zero": true, "rangeMin": 20 }
+    },
+    "color": { "field": "Country", "type": "nominal", "legend": null },
+    "tooltip": [
+      { "field": "Country", "type": "nominal", "title": "Country" },
+      {
+        "field": "Received",
+        "type": "quantitative",
+        "title": "Received ($)"
+      }
+    ]
+  }
+}

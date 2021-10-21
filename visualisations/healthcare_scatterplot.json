@@ -1,0 +1,156 @@
+{
+  "config": {
+    "legend": {
+      "orient": "right"
+    },
+    "view": {
+      "stroke": "transparent"
+    }
+  },
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 500,
+  "title": {
+    "text": "HALE, Medical Doctors Available and Population",
+    "color": "#092215",
+    "fontSize": 18
+  },
+  "background": "#f8f9fa",
+  "data": {
+    "url": "../transformed_data/scatterplot_healthcare.csv"
+  },
+  "params": [
+    {
+      "name": "Population_Above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 100000000,
+        "step": 1000000,
+        "name": "Minimum Population: "
+      }
+    },
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "labels": [
+          "Show All",
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "transform": [
+    { "filter": "datum.Population > Population_Above" },
+    {
+      "filter": "Continent_selection == null || datum.Continent == Continent_selection"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Medical",
+      "type": "quantitative",
+      "title": "Medical doctors (per 10,000 people)",
+      "scale": { "type": "linear", "domain": [-1, 80] },
+      "axis": { "tickColor": null, "labelFontSize": 15 }
+    },
+    "y": {
+      "field": "HALE",
+      "type": "quantitative",
+      "title": "HALE - Healthy Life Expectancy",
+      "scale": { "type": "linear", "domain": [40, 80] }
+    }
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "grid",
+          "select": "interval",
+          "bind": "scales"
+        }
+      ],
+      "mark": "circle",
+      "encoding": {
+        "size": {
+          "field": "Population",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [1000000, 10000000, 50000000, 100000000, 500000000],
+            "range": [10, 50, 150, 200, 300, 400]
+          },
+          "legend": { "format": ".1s" }
+        },
+        "color": {
+          "field": "Continent",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "North America",
+              "South America",
+              "Europe",
+              "Africa",
+              "Asia",
+              "Oceania"
+            ]
+          }
+        },
+        "tooltip": [
+          { "field": "Country", "type": "nominal" },
+          {
+            "field": "Medical",
+            "type": "quantitative",
+            "format": ","
+          },
+          { "field": "HALE", "type": "quantitative", "format": "," },
+          { "field": "Population", "type": "quantitative", "format": "," }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": { "field": "CountryName", "type": "nominal" },
+        "color": { "value": "black" },
+        "opacity": {
+          "value": 0
+        },
+        "tooltip": [
+          { "field": "Country", "type": "nominal" },
+          {
+            "field": "Medical",
+            "type": "quantitative",
+            "format": ","
+          },
+          { "field": "HALE", "type": "quantitative", "format": "," },
+          { "field": "Population", "type": "quantitative", "format": "," }
+        ]
+      }
+    }
+  ]
+}

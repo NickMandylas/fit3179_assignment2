@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A bar chart that sorts the y-values by the x-values.",
+  "data": { "url": "../transformed_data/top_expenditure_by_country.csv" },
+  "height": { "step": 17 },
+  "title": {
+    "text": "Healthcare Spend by Population",
+    "color": "#092215",
+    "fontSize": 18
+  },
+  "background": "#fff",
+  "width": "container",
+  "encoding": {
+    "y": {
+      "field": "Country",
+      "sort": "-x"
+    },
+    "x": {
+      "field": "Population",
+      "aggregate": "sum",
+      "title": "Population"
+    },
+    "color": {
+      "field": "Expenditure",
+      "title": "Expenditure ($)",
+      "type": "quantitative",
+      "scale": {
+        "domain": [10, 20, 4000, 5000, 10000],
+        "range": ["#E0091F", "#FC680E", "#FBCE02", "#ADB613", "#327D37"]
+      }
+    },
+    "tooltip": [
+      { "field": "Country", "type": "nominal", "title": "Country" },
+      {
+        "field": "Population",
+        "type": "quantitative",
+        "title": "Population: "
+      },
+      {
+        "field": "Expenditure",
+        "type": "quantitative",
+        "title": "Expenditure ($): "
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": "bar"
+    }
+  ]
+}
